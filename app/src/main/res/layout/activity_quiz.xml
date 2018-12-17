@@ -7,38 +7,47 @@
     tools:context=".QuizActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="387dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="337dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
+
         <RadioGroup
             android:id="@+id/radioGroup1"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.04" >
+            android:layout_height="match_parent"
+            android:layout_weight="0.04">
+
             <RadioButton
                 android:id="@+id/radio0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="RadioButton" />
+
             <RadioButton
                 android:id="@+id/radio1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="RadioButton" />
+
             <RadioButton
                 android:id="@+id/radio2"
                 android:layout_width="match_parent"

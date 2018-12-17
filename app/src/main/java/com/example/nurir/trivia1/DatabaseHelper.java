@@ -36,7 +36,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //+U_email+ " TEXT, "
         db.execSQL(SQL_QuesTable);
         db.execSQL(SQL_UserTable);
-       // addQuestions();
     }
     public void addUser(Users user){
        SQLiteDatabase dbase = this.getWritableDatabase();
@@ -60,7 +59,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return user;
     }
 
-    private void addQuestions()
+    public void addQuestions()
     {//make an admin screen to addquestions
         Question q1 = new Question("Which company is the largest manufacturer" +
                 " of network equipment?","HP", "IBM", "CISCO", "CISCO");
@@ -77,6 +76,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Question q5 = new Question("Which of the following is NOT an" +
                 " interpreted language?","Ruby","Python","BASIC","BASIC");
         this.addQuestion(q5);
+    }
+    public void addNewQuestions(String question, String optionA, String optionB, String optionC, String answer){
+        Question qn = new Question(question, optionA, optionB, optionC, answer);
+        this.addQuestion(qn);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldV, int newV) {
@@ -97,8 +100,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(T_Quest, null, values);
         db.close();
     }
-    public List<Question> getAllQuestions() {
-        List<Question> quesList = new ArrayList<Question>();
+    public ArrayList<Question> getAllQuestions() {
+        ArrayList<Question> quesList = new ArrayList<Question>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + T_Quest;
         SQLiteDatabase dbase=this.getReadableDatabase();

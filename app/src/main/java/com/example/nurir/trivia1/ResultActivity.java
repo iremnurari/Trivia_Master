@@ -21,18 +21,9 @@ public class ResultActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         int score= b.getInt("score");
         //display score
+        t.setText("your score is " +score);
         bar.setRating(score);
-        switch (score)
-        {
-            case 1:
-            case 2: t.setText("Oopsie! Better Luck Next Time!");
-                break;
-            case 3:
-            case 4:t.setText("Hmmmm.. Someone's been reading a lot of trivia");
-                break;
-            case 5:t.setText("Who are you? A trivia wizard???");
-                break;
-        }
+
     }
    /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
