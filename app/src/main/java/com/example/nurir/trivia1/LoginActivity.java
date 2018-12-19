@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         Toast.makeText(getApplicationContext(), "Welcome " + user.getUSERNAME(), Toast.LENGTH_SHORT).show();
                     }
-                    else
+                    if(!admin() && user==null)
                         {
                         Toast.makeText(getApplicationContext(), "You are not registered", Toast.LENGTH_LONG).show();
                         }
@@ -75,14 +75,6 @@ public class LoginActivity extends AppCompatActivity {
         if((username.getText().toString().equals(adminUsername) ) && (password.getText().toString().equals(adminPassword)))
         {
             return true;
-        }
-        else if(username.getText().toString().equals(adminUsername)){
-            Toast.makeText(getApplicationContext(), "Wrong username ", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        else if(password.getText().toString().equals(adminPassword)){
-            Toast.makeText(getApplicationContext(), "Wrong password", Toast.LENGTH_LONG).show();
-            return false;
         }
         else return false;
     }
