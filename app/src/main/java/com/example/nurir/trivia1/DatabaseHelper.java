@@ -60,7 +60,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void addQuestions()
-    {//make an admin screen to addquestions
+    {//make an admin screen to add questions
         Question q1 = new Question("Which company is the largest manufacturer" +
                 " of network equipment?","HP", "IBM", "CISCO", "CISCO");
         this.addQuestion(q1);
@@ -121,6 +121,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         // return quest list
         return quesList;
+    }
+    public Question findQuestion (int id){
+        SQLiteDatabase dbase = this.getReadableDatabase();
+        Question question = null;
+        String SQL = "Select * From " +T_Quest+ " Where " +Q_ID+ "=" +id+ ";";
+        Cursor cursor = dbase.rawQuery(SQL, null);
+        if(cursor != null){
+            cursor.moveToFirst();
+        }
+        if(cursor != null && cursor.getCount() > 0){
+            question = new Question(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
+        }
+        return question;
+    }
+    public void editQuestion(Question q){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        String where = Q_ID+ "=?";
+        String [] whereArgs = new String[] {String.valueOf(q.getID())};
+        //contentValues.put(Q_ID, q.getID());
+        contentValues.put(Q_Quest, q.getQUESTION());
+        contentValues.put(Q_optA, q.getOPTA());
+        contentValues.put(Q_optB, q.getOPTB());
+        contentValues.put(Q_optC, q.getOPTC());
+        contentValues.put(Q_Ans, q.getANSWER());
+
+        db.update(T_Quest, contentValues, where, whereArgs);
     }
     public int rowcount()
     {

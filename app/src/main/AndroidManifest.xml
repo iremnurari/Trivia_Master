@@ -26,8 +26,8 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".AdminActivity" />
         <activity android:name=".AdminAddActivity" />
-        <activity android:name=".AdminRemoveActivity" />
-        <activity android:name=".AdminEditActivity"></activity>
+        <activity android:name=".AdminEditActivity" />
+        <activity android:name=".QuestionEditActivity"></activity>
     </application>
 
 </manifest>

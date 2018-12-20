@@ -19,6 +19,15 @@ public class Question {
         OPTC = optC;
         ANSWER = answer;
     }
+    public Question(int id,String question, String optA, String optB, String optC, String answer) {
+
+        ID = id;
+        QUESTION = question;
+        OPTA = optA;
+        OPTB = optB;
+        OPTC = optC;
+        ANSWER = answer;
+    }
     public int getID()
     {
         return ID;

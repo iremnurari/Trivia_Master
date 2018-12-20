@@ -23,8 +23,15 @@ public class AdminActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        REMOVE = findViewById(R.id.adminRemoveBtn);
+       // REMOVE = findViewById(R.id.adminRemoveBtn);
         EDIT = findViewById(R.id.adminEditBtn);
+        EDIT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AdminActivity.this, AdminEditActivity.class);
+                startActivity(intent);
+            }
+        });
         welcome.setText("Welcome admin" );
 
     }
