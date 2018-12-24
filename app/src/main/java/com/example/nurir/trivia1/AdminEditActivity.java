@@ -19,6 +19,9 @@ public class AdminEditActivity extends AppCompatActivity {
         ArrayList<Question> questions;
         DatabaseHelper openHelper = new DatabaseHelper(this);
         questions = openHelper.getAllQuestions();
+        if(questions.isEmpty()){
+            openHelper.addQuestions();
+        }
         QuestionListAdapter listAdapter = new QuestionListAdapter(questions,this);
         listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -40,6 +40,11 @@ public class QuestionEditActivity extends AppCompatActivity {
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                que.setQUESTION(question.getText().toString());
+                que.setOPTA(a.getText().toString());
+                que.setOPTB(b.getText().toString());
+                que.setOPTC(c.getText().toString());
+                que.setANSWER(answer.getText().toString());
                 databaseHelper.editQuestion(que);
                 Intent i = new Intent(QuestionEditActivity.this, AdminEditActivity.class);
                 startActivity(i);

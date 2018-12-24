@@ -1,6 +1,5 @@
 package com.example.nurir.trivia1;
 import java.util.ArrayList;
-import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -28,8 +27,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String SQL_QuesTable = "CREATE TABLE IF NOT EXISTS " +T_Quest+ " ( "
                 +Q_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +Q_Quest+
-                " TEXT, " + Q_Ans + " TEXT, "+ Q_optA +" TEXT, "
-                +Q_optB+ " TEXT, " +Q_optC+ " TEXT);";
+                " TEXT, " + Q_optA +" TEXT, " +Q_optB+ " TEXT, "
+                +Q_optC+ " TEXT, "+ Q_Ans + " TEXT);";
         String SQL_UserTable = "CREATE TABLE IF NOT EXISTS " +T_User+ " ( "
                 +U_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +U_uname+
                 " TEXT, " +U_password+ " TEXT);";
@@ -92,10 +91,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Q_Quest, quest.getQUESTION());
-        values.put(Q_Ans, quest.getANSWER());
         values.put(Q_optA, quest.getOPTA());
         values.put(Q_optB, quest.getOPTB());
         values.put(Q_optC, quest.getOPTC());
+        values.put(Q_Ans, quest.getANSWER());
         // Inserting Row
         db.insert(T_Quest, null, values);
         db.close();
@@ -112,10 +111,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Question quest = new Question();
                 quest.setID(cursor.getInt(0));
                 quest.setQUESTION(cursor.getString(1));
-                quest.setANSWER(cursor.getString(2));
-                quest.setOPTA(cursor.getString(3));
-                quest.setOPTB(cursor.getString(4));
-                quest.setOPTC(cursor.getString(5));
+                quest.setOPTA(cursor.getString(2));
+                quest.setOPTB(cursor.getString(3));
+                quest.setOPTC(cursor.getString(4));
+                quest.setANSWER(cursor.getString(5));
                 quesList.add(quest);
             } while (cursor.moveToNext());
         }
