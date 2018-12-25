@@ -13,6 +13,7 @@ public class QuestionEditActivity extends AppCompatActivity {
     Button updateBtn, deleteBtn;
     Question que = new Question();
     DatabaseHelper databaseHelper = new DatabaseHelper(this);
+    int ID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,6 @@ public class QuestionEditActivity extends AppCompatActivity {
         updateBtn = findViewById(R.id.updateButton);
         deleteBtn = findViewById(R.id.deleteButton);
         Bundle bundle = getIntent().getExtras();
-        int ID = 0;
         if(bundle != null){
             ID = bundle.getInt("ID");
         }
@@ -46,6 +46,14 @@ public class QuestionEditActivity extends AppCompatActivity {
                 que.setOPTC(c.getText().toString());
                 que.setANSWER(answer.getText().toString());
                 databaseHelper.editQuestion(que);
+                Intent i = new Intent(QuestionEditActivity.this, AdminEditActivity.class);
+                startActivity(i);
+            }
+        });
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseHelper.deleteQuestion(ID);
                 Intent i = new Intent(QuestionEditActivity.this, AdminEditActivity.class);
                 startActivity(i);
             }

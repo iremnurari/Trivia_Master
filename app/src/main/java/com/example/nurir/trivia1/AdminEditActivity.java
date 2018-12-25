@@ -10,17 +10,17 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class AdminEditActivity extends AppCompatActivity {
-
+    ArrayList<Question> questions;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_edit);
         ListView listView = findViewById(R.id.questList);
-        ArrayList<Question> questions;
         DatabaseHelper openHelper = new DatabaseHelper(this);
         questions = openHelper.getAllQuestions();
         if(questions.isEmpty()){
             openHelper.addQuestions();
+            questions = openHelper.getAllQuestions();
         }
         QuestionListAdapter listAdapter = new QuestionListAdapter(questions,this);
         listView.setAdapter(listAdapter);
@@ -29,7 +29,8 @@ public class AdminEditActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(AdminEditActivity.this, QuestionEditActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("ID", position+1);
+                Question question = questions.get(position);
+                bundle.putInt("ID", question.getID());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

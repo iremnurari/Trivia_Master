@@ -30,7 +30,7 @@ public class QuestionListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class QuestionListAdapter extends BaseAdapter {
             TextView titleQuestion = convertView.findViewById(R.id.questionTitle);
             TextView idQuestion = convertView.findViewById(R.id.questionID);
             titleQuestion.setText(question.getQUESTION());
-            idQuestion.setText(""+question.getID());
+            idQuestion.setText(+question.getID()+" :");
             return convertView;
         }
         else {

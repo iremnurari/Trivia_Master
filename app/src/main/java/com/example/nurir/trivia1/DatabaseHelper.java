@@ -139,7 +139,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         String where = Q_ID+ "=?";
         String [] whereArgs = new String[] {String.valueOf(q.getID())};
-        //contentValues.put(Q_ID, q.getID());
         contentValues.put(Q_Quest, q.getQUESTION());
         contentValues.put(Q_optA, q.getOPTA());
         contentValues.put(Q_optB, q.getOPTB());
@@ -147,6 +146,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(Q_Ans, q.getANSWER());
 
         db.update(T_Quest, contentValues, where, whereArgs);
+    }
+    public void deleteQuestion(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String where = Q_ID+ " = "+id;
+        db.delete(T_Quest, where,null);
     }
     public int rowcount()
     {

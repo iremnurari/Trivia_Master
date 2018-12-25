@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 public class AdminActivity extends AppCompatActivity {
     TextView welcome;
-    Button ADD, REMOVE, EDIT;
+    Button ADD, EDIT;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +23,6 @@ public class AdminActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-       // REMOVE = findViewById(R.id.adminRemoveBtn);
         EDIT = findViewById(R.id.adminEditBtn);
         EDIT.setOnClickListener(new View.OnClickListener() {
             @Override

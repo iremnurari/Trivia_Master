@@ -13,7 +13,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 public class QuizActivity extends Activity {
-    ArrayList<Question> quesList;
+    ArrayList<Question> quesList = null;
     int score=0;
     int qid=0;
     Question currentQ;
@@ -29,6 +29,7 @@ public class QuizActivity extends Activity {
         quesList = db.getAllQuestions();
         if(quesList.isEmpty()) {
             db.addQuestions();
+            quesList = db.getAllQuestions();
         }
         else Log.d("error", "list is not empty");
         currentQ = quesList.get(qid);

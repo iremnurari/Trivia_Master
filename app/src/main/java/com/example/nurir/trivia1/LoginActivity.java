@@ -30,10 +30,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(!emptyFields()) {
                     Users user = openHelper.searchUser(username.getText().toString(), password.getText().toString());
                     if(admin()){
-                        //Bundle bundle = new Bundle();
-                       // bundle.putString("admin", adminUsername);
                         Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
-                        //intent.putExtras(bundle);
                         startActivity(intent);
                         Toast.makeText(getApplicationContext(), "Welcome " +adminUsername , Toast.LENGTH_SHORT).show();
                     }
@@ -85,11 +82,5 @@ public class LoginActivity extends AppCompatActivity {
         }
         else return false;
     }
-
-    /*public void insertUser(String u, String p){
-        ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.U_uname, u);
-        values.put(DatabaseHelper.U_password, p);
-        long id = db.insert(DatabaseHelper.T_User, null,values);
-    }*/
+    
 }
