@@ -60,7 +60,6 @@ public class LoginActivity extends AppCompatActivity {
                     Users user = new Users(username.getText().toString(), password.getText().toString());
                     openHelper.addUser(user);
                     Toast.makeText(getApplicationContext(), "Registered Successfully", Toast.LENGTH_LONG).show();
-                    username.setText("");
                     password.setText("");
                 }
                 else
@@ -82,5 +81,5 @@ public class LoginActivity extends AppCompatActivity {
         }
         else return false;
     }
-    
+
 }

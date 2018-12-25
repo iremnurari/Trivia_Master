@@ -11,15 +11,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String T_Quest = "quest";
     private static final String Q_ID = "id";
     private static final String Q_Quest = "question";
-    private static final String Q_Ans= "answer"; //correct option
-    private static final String Q_optA = "opta"; //option a
-    private static final String Q_optB = "optb"; //option b
-    private static final String Q_optC = "optc"; //option c
+    private static final String Q_Ans= "answer";
+    private static final String Q_optA = "opta";
+    private static final String Q_optB = "optb";
+    private static final String Q_optC = "optc";
     private static final String T_User = "SavedUsers";
     private static final String U_ID = "ID";
     private static final String U_uname = "USERNAME";
-    //private static final String U_email = "EMAIL";
     private static final String U_password = "PASSWORD";
+    private static final String T_Result = "Results";
+    private static final String R_ID = "ID";
+    private static final String R_UserName = "User";
+    private static final String R_score = "Score";
+    private static final String R_Date = "Date";
     public DatabaseHelper(Context context) {
         super(context, DBName, null, DBVersion);
     }
@@ -33,8 +37,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 +U_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +U_uname+
                 " TEXT, " +U_password+ " TEXT);";
         //+U_email+ " TEXT, "
+        String SQL_ResultTable = "CREATE TABLE IF NOT EXISTS " +T_Result+ " ("
+                +R_ID+ " INTEGER PRIMARY KEY AUTOINCREMENT, " +R_Date+ " TEXT, " + R_UserName +
+                " TEXT, " +R_score+ " INTEGER);";
         db.execSQL(SQL_QuesTable);
         db.execSQL(SQL_UserTable);
+        db.execSQL(SQL_ResultTable);
+    }
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldV, int newV) {
+        db.execSQL("DROP TABLE IF EXISTS " + T_Quest);
+        db.execSQL("DROP TABLE IF EXISTS " +T_User);
+        db.execSQL("DROP TABLE IF EXISTS " +T_Result);
+        onCreate(db);
     }
     public void addUser(Users user){
        SQLiteDatabase dbase = this.getWritableDatabase();
@@ -57,7 +72,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return user;
     }
-
     public void addQuestions()
     {//make an admin screen to add questions
         Question q1 = new Question("Which company is the largest manufacturer" +
@@ -80,12 +94,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Question qn = new Question(question, optionA, optionB, optionC, answer);
         this.addQuestion(qn);
     }
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldV, int newV) {
-        db.execSQL("DROP TABLE IF EXISTS " + T_Quest);
-        db.execSQL("DROP TABLE IF EXISTS " +T_User);
-        onCreate(db);
-    }
+
     // Adding new question
     public void addQuestion(Question quest) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -144,15 +153,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(Q_optB, q.getOPTB());
         contentValues.put(Q_optC, q.getOPTC());
         contentValues.put(Q_Ans, q.getANSWER());
-
         db.update(T_Quest, contentValues, where, whereArgs);
+        db.close();
     }
     public void deleteQuestion(int id){
         SQLiteDatabase db = this.getWritableDatabase();
         String where = Q_ID+ " = "+id;
         db.delete(T_Quest, where,null);
     }
-    public int rowcount()
+    public void saveResult(Result result){
+        SQLiteDatabase dbase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(R_score, result.getScore());
+        contentValues.put(R_UserName, result.getUsername());
+        contentValues.put(R_Date, result.getDate());
+        dbase.insert(T_Result, null,contentValues);
+        dbase.close();
+    }
+    public ArrayList<Result> getAllresults(String username){
+        ArrayList<Result> resList = new ArrayList<Result>();
+        String selectQuery = "SELECT  * FROM " +T_Result+ " WHERE " + R_UserName + " = '" +username+ "';";
+        SQLiteDatabase dbase=this.getReadableDatabase();
+        Cursor cursor = dbase.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Result result = new Result();
+                result.setID(cursor.getInt(0));
+                result.setDate(cursor.getString(1));
+                result.setUsername(cursor.getString(2));
+                result.setScore(cursor.getInt(3));
+                resList.add(result);
+            } while (cursor.moveToNext());
+        }
+        // return quest list
+        return resList;
+    }
+    /*public int rowcount()
     {
         int row=0;
         String selectQuery = "SELECT  * FROM " + T_Quest;
@@ -160,5 +196,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(selectQuery, null);
         row=cursor.getCount();
         return row;
-    }
+    }*/
 }

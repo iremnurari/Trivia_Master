@@ -1,12 +1,13 @@
 package com.example.nurir.trivia1;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Calendar;
+import java.util.Date;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -24,7 +25,12 @@ public class QuizActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-        DatabaseHelper db = new DatabaseHelper(this);
+        final Bundle bundle = getIntent().getExtras();
+        final String username = bundle.getString("user");
+        final DatabaseHelper db = new DatabaseHelper(this);
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+        final String date = df.format(c);
        // db.addQuestions();
         quesList = db.getAllQuestions();
         if(quesList.isEmpty()) {
@@ -58,20 +64,20 @@ public class QuizActivity extends Activity {
                     Intent intent = new Intent(QuizActivity.this, ResultActivity.class);
                     Bundle b = new Bundle();
                     b.putInt("score", score); //Your score
+                    b.putString("u", username);
+                    Result result = new Result(date ,username,score);
+                    db.saveResult(result);
                     intent.putExtras(b); //Put your score to your next Intent
                     startActivity(intent);
                     finish();
+
                 }
+
             }
         });
 
     }
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_quiz, menu);
-        return true;
-    }*/
+
     private void setQuestionView()
     {
         txtQuestion.setText(currentQ.getQUESTION());
