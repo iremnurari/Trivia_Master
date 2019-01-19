@@ -32,22 +32,22 @@ public class QuestionEditActivity extends AppCompatActivity {
         }
         que = databaseHelper.findQuestion(ID);
         if(que == null ) Log.d("error", "couldn't find the object");
-        question.setText(que.getQUESTION());
-        a.setText(que.getOPTA());
-        b.setText(que.getOPTB());
-        c.setText(que.getOPTC());
-        answer.setText(que.getANSWER());
+      /*  question.setText(que.getQUESTION());
+        a.setText(que.getOption1());
+        b.setText(que.getOption2());
+        c.setText(que.getOption3());
+        answer.setText(que.getAnswer());*/
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                que.setQUESTION(question.getText().toString());
-                que.setOPTA(a.getText().toString());
+          /*      que.setQuestion(question.getText().toString());
+                que.setOption1(a.getText().toString());
                 que.setOPTB(b.getText().toString());
                 que.setOPTC(c.getText().toString());
                 que.setANSWER(answer.getText().toString());
                 databaseHelper.editQuestion(que);
                 Intent i = new Intent(QuestionEditActivity.this, AdminEditActivity.class);
-                startActivity(i);
+                startActivity(i);*/
             }
         });
         deleteBtn.setOnClickListener(new View.OnClickListener() {

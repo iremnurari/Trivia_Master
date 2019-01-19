@@ -41,8 +41,8 @@ public class QuestionListAdapter extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.edit_list_row, null);
             TextView titleQuestion = convertView.findViewById(R.id.questionTitle);
             TextView idQuestion = convertView.findViewById(R.id.questionID);
-            titleQuestion.setText(question.getQUESTION());
-            idQuestion.setText(+question.getID()+" :");
+            titleQuestion.setText(question.getQuestion());
+           // idQuestion.setText(+question.getID()+" :");
             return convertView;
         }
         else {

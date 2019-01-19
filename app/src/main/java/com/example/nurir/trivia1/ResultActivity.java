@@ -8,8 +8,18 @@ import android.view.MenuItem;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class ResultActivity extends AppCompatActivity {
     String u;
+    DatabaseReference resultDatabase;
+    FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +36,7 @@ public class ResultActivity extends AppCompatActivity {
         //display score
         t.setText("your score is " +score);
         bar.setRating(score);
+        saveRecord(score);
 
     }
     @Override
@@ -53,6 +64,19 @@ public class ResultActivity extends AppCompatActivity {
         bundle.putString("u", u );
         i.putExtras(bundle);
         startActivity(i);
+    }
+    public void saveRecord(int s){
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        final String date = df.format(c);
+        String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        resultDatabase = FirebaseDatabase.getInstance().getReference("Result");
+        String id = resultDatabase.push().getKey();
+        Result result = new Result(id, date, userID, s);
+        resultDatabase.child(id).setValue(result);
+
+
     }
    /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {

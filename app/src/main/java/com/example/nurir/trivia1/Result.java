@@ -1,51 +1,48 @@
 package com.example.nurir.trivia1;
 
 public class Result {
-    private int ID, Score;
-    private String Username, Date;
+  private String date, userID, ID;
+  private int score;
 
-    public Result(){
-        ID = 0;
-        Username = "";
-        Score = 0;
-        Date = "";
+    public Result() {
     }
 
-    public Result(String date, String  Username, int Score){
-        this.Date = date;
-        this.Username = Username;
-        this.Score = Score;
+    public Result(String ID, String date, String userID, int score) {
+        this.ID = ID;
+        this.date = date;
+        this.userID = userID;
+        this.score = score;
     }
 
-    public int getID() {
+    public String getID() {
         return ID;
     }
 
-    public int getScore() {
-        return Score;
-    }
-
-    public String  getUsername() {
-        return Username;
-    }
-
-    public String getDate() {
-        return Date;
-    }
-
-    public void setID(int ID) {
+    public void setID(String ID) {
         this.ID = ID;
     }
 
-    public void setUsername(String username) {
-        Username = username;
+    public String getUserID() {
+        return userID;
     }
 
-    public void setScore(int score) {
-        Score = score;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public void setDate(String date) {
-        Date = date;
+        this.date = date;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

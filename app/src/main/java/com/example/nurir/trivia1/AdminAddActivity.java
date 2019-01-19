@@ -12,29 +12,33 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.support.v7.app.ActionBar;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class AdminAddActivity extends AppCompatActivity {
     EditText question, optA, optB, optC, answer;
     Button addQuest;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_add);
-        final DatabaseHelper openHelper = new DatabaseHelper(this);
         question = findViewById(R.id.newQuestionTxt);
         optA = findViewById(R.id.optA);
         optB = findViewById(R.id.optB);
         optC = findViewById(R.id.optC);
         answer = findViewById(R.id.answer);
+        databaseReference = FirebaseDatabase.getInstance().getReference("Questions");
         addQuest = findViewById(R.id.addNewQuestionBtn);
         addQuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!emptyFields()){
-                    openHelper.addNewQuestions(question.getText().toString(),optA.getText().toString(),optB.getText().toString(),optC.getText().toString(),answer.getText().toString());
-                    Intent intent = new Intent(AdminAddActivity.this,AdminActivity.class);
-                    startActivity(intent);
-                    Toast.makeText(getApplicationContext(), "Question added." , Toast.LENGTH_LONG).show();
+                    String id = databaseReference.push().getKey();
+                   Question q = new Question(question.getText().toString(),optA.getText().toString(),optB.getText().toString(),optC.getText().toString(),answer.getText().toString());
+                   databaseReference.child(String.valueOf(id)).setValue(q);
+                   startActivity(new Intent(AdminAddActivity.this, AdminActivity.class));
                 }
                 else Toast.makeText(getApplicationContext(), "Cannot left empty!" , Toast.LENGTH_LONG).show();
 

@@ -1,89 +1,186 @@
 package com.example.nurir.trivia1;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.util.Log;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class QuizActivity extends Activity {
-    ArrayList<Question> quesList = null;
     int score=0;
-    int qid=0;
-    Question currentQ;
-    TextView txtQuestion, tvUser;
-    RadioButton rda, rdb, rdc;
-    Button butNext;
+    int total = 0;
+    TextView txtQuestion, tvUser,countQ;
+    Button rda, rdb, rdc;
+    DatabaseReference questionDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-        final Bundle bundle = getIntent().getExtras();
-        final String username = bundle.getString("user");
-        final DatabaseHelper db = new DatabaseHelper(this);
-        Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
-        final String date = df.format(c);
-       // db.addQuestions();
-        quesList = db.getAllQuestions();
-        if(quesList.isEmpty()) {
-            db.addQuestions();
-            quesList = db.getAllQuestions();
-        }
-        else Log.d("error", "list is not empty");
-        currentQ = quesList.get(qid);
-        final int numberOfq = quesList.size();
-        txtQuestion = findViewById(R.id.textView1);
+        txtQuestion = findViewById(R.id.questTitle);
         rda = findViewById(R.id.radio0);
         rdb = findViewById(R.id.radio1);
         rdc = findViewById(R.id.radio2);
-        butNext = findViewById(R.id.button1);
-        setQuestionView();
-        butNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RadioGroup grp = findViewById(R.id.radioGroup1);
-                RadioButton answer = findViewById(grp.getCheckedRadioButtonId());
-                Log.d("yourans", currentQ.getANSWER()+" "+answer.getText());
-                if(currentQ.getANSWER().equals(answer.getText()))
-                {
-                    score++;
-                    Log.d("score", "Your score="+score);
-                }
-                if(!(qid >= numberOfq)){
-                    currentQ=quesList.get(qid);
-                    setQuestionView();
-                }else{
-                    Intent intent = new Intent(QuizActivity.this, ResultActivity.class);
-                    Bundle b = new Bundle();
-                    b.putInt("score", score); //Your score
-                    b.putString("u", username);
-                    Result result = new Result(date ,username,score);
-                    db.saveResult(result);
-                    intent.putExtras(b); //Put your score to your next Intent
-                    startActivity(intent);
-                    finish();
-
-                }
-
-            }
-        });
+        countQ = findViewById(R.id.countQ);
+        updateQuestion();
 
     }
+    public void updateQuestion(){
+        total++;
+        String ct = total+ " / 5";
+        countQ.setText(ct);
+        if(total>5){
+            //result activity
+            Bundle bundle = new Bundle();
+            Intent intent = new Intent(QuizActivity.this, ResultActivity.class);
+            bundle.putInt("score", score);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+        else{
+            questionDatabase = FirebaseDatabase.getInstance().getReference("Questions").child(String.valueOf(total));
+            questionDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    final Question question = dataSnapshot.getValue(Question.class);
+                    txtQuestion.setText(question.getQuestion());
+                    rda.setText(question.getOption1());
+                    rdb.setText(question.getOption2());
+                    rdc.setText(question.getOption3());
+                    rda.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(rda.getText().toString().equals(question.getAnswer())){
+                                rda.setBackgroundColor(Color.GREEN);
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        score++;
+                                        rda.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                                        updateQuestion();
+                                    }
+                                },1500);
 
-    private void setQuestionView()
-    {
-        txtQuestion.setText(currentQ.getQUESTION());
-        rda.setText(currentQ.getOPTA());
-        rdb.setText(currentQ.getOPTB());
-        rdc.setText(currentQ.getOPTC());
-        qid++;
+                            }
+                            else{
+                                rda.setBackgroundColor(Color.RED);
+                                if(rdb.getText().toString().equals(question.getAnswer())){
+                                    rdb.setBackgroundColor(Color.GREEN);
+                                }
+                                else if(rdc.getText().toString().equals(question.getAnswer())){
+                                    rdc.setBackgroundColor(Color.GREEN);
+                                }
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        rda.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                                        rdb.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                                        rdc.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                                        updateQuestion();
+                                    }
+                                },1500);
+
+                            }
+
+                        }
+                    });
+                    rdb.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(rdb.getText().toString().equals(question.getAnswer())){
+                                rdb.setBackgroundColor(Color.GREEN);
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        score++;
+                                        rdb.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                                        updateQuestion();
+                                    }
+                                },1500);
+
+                            }
+                            else{
+                                rdb.setBackgroundColor(Color.RED);
+                                if(rda.getText().toString().equals(question.getAnswer())){
+                                    rda.setBackgroundColor(Color.GREEN);
+                                }
+                                else if(rdc.getText().toString().equals(question.getAnswer())){
+                                    rdc.setBackgroundColor(Color.GREEN);
+                                }
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        rda.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                                        rdb.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                                        rdc.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                                        updateQuestion();
+                                    }
+                                },1500);
+
+                            }
+                        }
+                    });
+                    rdc.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(rdc.getText().toString().equals(question.getAnswer())){
+                                rdc.setBackgroundColor(Color.GREEN);
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        score++;
+                                        rdc.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                                        updateQuestion();
+                                    }
+                                },1500);
+
+                            }
+                            else{
+                                rdc.setBackgroundColor(Color.RED);
+                                if(rdb.getText().toString().equals(question.getAnswer())){
+                                    rdb.setBackgroundColor(Color.GREEN);
+                                }
+                                else if(rda.getText().toString().equals(question.getAnswer())){
+                                    rda.setBackgroundColor(Color.GREEN);
+                                }
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        rda.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                                        rdb.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                                        rdc.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+                                        updateQuestion();
+                                    }
+                                },1500);
+
+                            }
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
+
+
 }

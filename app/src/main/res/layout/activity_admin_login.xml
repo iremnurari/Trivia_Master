@@ -27,10 +27,10 @@
             android:layout_marginBottom="8dp">
 
             <EditText
-                android:id="@+id/emailEditText"
+                android:id="@+id/adminEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email"
+                android:hint="admin email"
                 android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
 
@@ -41,40 +41,32 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
             <EditText
-                android:id="@+id/passwordEditText"
+                android:id="@+id/admin_passwordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:hint="Password"/>
         </android.support.design.widget.TextInputLayout>
 
-        <Button
-            android:id="@+id/btn_reset_password"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@null"
-            android:text="@string/btn_forgot_password"
-            android:textAllCaps="false"
-            android:textColor="@color/buttonColor" />
-
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/signinbutton"
+            android:id="@+id/adminSignIn"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
             android:padding="12dp"
-            android:text="Login"/>
+            android:text="LogIn"/>
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/registerButton"
+            android:id="@+id/backBtn"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="24dp"
+            android:background="@null"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
             android:padding="12dp"
-            android:text="Register"/>
+            android:text="Back"/>
+
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

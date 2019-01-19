@@ -21,7 +21,7 @@ public class AdminEditActivity extends AppCompatActivity {
         DatabaseHelper openHelper = new DatabaseHelper(this);
         questions = openHelper.getAllQuestions();
         if(questions.isEmpty()){
-            openHelper.addQuestions();
+           // openHelper.addQuestions();
             questions = openHelper.getAllQuestions();
         }
         QuestionListAdapter listAdapter = new QuestionListAdapter(questions,this);
@@ -32,7 +32,7 @@ public class AdminEditActivity extends AppCompatActivity {
                 Intent intent = new Intent(AdminEditActivity.this, QuestionEditActivity.class);
                 Bundle bundle = new Bundle();
                 Question question = questions.get(position);
-                bundle.putInt("ID", question.getID());
+               // bundle.putInt("ID", question.getID());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

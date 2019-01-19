@@ -55,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
        SQLiteDatabase dbase = this.getWritableDatabase();
        ContentValues contentValues = new ContentValues();
        contentValues.put(U_uname, user.getUSERNAME());
-       contentValues.put(U_password, user.getPASSWORD());
+       //contentValues.put(U_password, user.getPASSWORD());
        dbase.insert(T_User, null,contentValues);
        dbase.close();
     }
@@ -72,7 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return user;
     }
-    public void addQuestions()
+   /* public void addQuestions()
     {//make an admin screen to add questions
         Question q1 = new Question("Which company is the largest manufacturer" +
                 " of network equipment?","HP", "IBM", "CISCO", "CISCO");
@@ -93,17 +93,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void addNewQuestions(String question, String optionA, String optionB, String optionC, String answer){
         Question qn = new Question(question, optionA, optionB, optionC, answer);
         this.addQuestion(qn);
-    }
+    }*/
 
     // Adding new question
     public void addQuestion(Question quest) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(Q_Quest, quest.getQUESTION());
+        /*values.put(Q_Quest, quest.getQUESTION());
         values.put(Q_optA, quest.getOPTA());
         values.put(Q_optB, quest.getOPTB());
         values.put(Q_optC, quest.getOPTC());
-        values.put(Q_Ans, quest.getANSWER());
+        values.put(Q_Ans, quest.getANSWER());*/
         // Inserting Row
         db.insert(T_Quest, null, values);
         db.close();
@@ -118,13 +118,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Question quest = new Question();
-                quest.setID(cursor.getInt(0));
-                quest.setQUESTION(cursor.getString(1));
+                //quest.setID(cursor.getInt(0));
+              /*  quest.setQUESTION(cursor.getString(1));
                 quest.setOPTA(cursor.getString(2));
                 quest.setOPTB(cursor.getString(3));
                 quest.setOPTC(cursor.getString(4));
                 quest.setANSWER(cursor.getString(5));
-                quesList.add(quest);
+                quesList.add(quest);*/
             } while (cursor.moveToNext());
         }
         // return quest list
@@ -139,7 +139,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor.moveToFirst();
         }
         if(cursor != null && cursor.getCount() > 0){
-            question = new Question(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
+           // question = new Question(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
         }
         return question;
     }
@@ -147,13 +147,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         String where = Q_ID+ "=?";
-        String [] whereArgs = new String[] {String.valueOf(q.getID())};
-        contentValues.put(Q_Quest, q.getQUESTION());
+       // String [] whereArgs = new String[] {String.valueOf(q.getID())};
+        /*contentValues.put(Q_Quest, q.getQUESTION());
         contentValues.put(Q_optA, q.getOPTA());
         contentValues.put(Q_optB, q.getOPTB());
         contentValues.put(Q_optC, q.getOPTC());
-        contentValues.put(Q_Ans, q.getANSWER());
-        db.update(T_Quest, contentValues, where, whereArgs);
+        contentValues.put(Q_Ans, q.getANSWER());*/
+        //db.update(T_Quest, contentValues, where, whereArgs);
         db.close();
     }
     public void deleteQuestion(int id){
@@ -161,7 +161,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String where = Q_ID+ " = "+id;
         db.delete(T_Quest, where,null);
     }
-    public void saveResult(Result result){
+   /* public void saveResult(Result result){
         SQLiteDatabase dbase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(R_score, result.getScore());
@@ -169,7 +169,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(R_Date, result.getDate());
         dbase.insert(T_Result, null,contentValues);
         dbase.close();
-    }
+    }*/
     public ArrayList<Result> getAllresults(String username){
         ArrayList<Result> resList = new ArrayList<Result>();
         String selectQuery = "SELECT  * FROM " +T_Result+ " WHERE " + R_UserName + " = '" +username+ "';";
@@ -177,12 +177,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = dbase.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             do {
-                Result result = new Result();
+                /*Result result = new Result();
                 result.setID(cursor.getInt(0));
                 result.setDate(cursor.getString(1));
                 result.setUsername(cursor.getString(2));
                 result.setScore(cursor.getInt(3));
-                resList.add(result);
+                resList.add(result);*/
             } while (cursor.moveToNext());
         }
         // return quest list

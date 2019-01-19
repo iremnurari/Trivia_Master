@@ -1,70 +1,56 @@
 package com.example.nurir.trivia1;
 public class Question {
-    private int ID;
-    private String QUESTION, OPTA, OPTB, OPTC, ANSWER;
-    public Question()
-    {
-        ID = 0;
-        QUESTION = "";
-        OPTA = "";
-        OPTB = "";
-        OPTC = "";
-        ANSWER = "";
-    }
-    public Question(String question, String optA, String optB, String optC, String answer) {
+   // private int ID;
+    private String question, option1, option2, option3, answer;
 
-        QUESTION = question;
-        OPTA = optA;
-        OPTB = optB;
-        OPTC = optC;
-        ANSWER = answer;
-    }
-    public Question(int id,String question, String optA, String optB, String optC, String answer) {
-
-        ID = id;
-        QUESTION = question;
-        OPTA = optA;
-        OPTB = optB;
-        OPTC = optC;
-        ANSWER = answer;
-    }
-    public int getID()
-    {
-        return ID;
-    }
-    public String getQUESTION() {
-        return QUESTION;
-    }
-    public String getOPTA() {
-        return OPTA;
-    }
-    public String getOPTB() {
-        return OPTB;
-    }
-    public String getOPTC() {
-        return OPTC;
-    }
-    public String getANSWER() {
-        return ANSWER;
-    }
-    public void setID(int id)
-    {
-        ID=id;
-    }
-    public void setQUESTION(String qUESTION) {
-        QUESTION = qUESTION;
-    }
-    public void setOPTA(String oPTA) {
-        OPTA = oPTA;
-    }
-    public void setOPTB(String oPTB) {
-        OPTB = oPTB;
-    }
-    public void setOPTC(String oPTC) {
-        OPTC = oPTC;
-    }
-    public void setANSWER(String aNSWER) {
-        ANSWER = aNSWER;
+    public Question(String question, String option1, String option2, String option3, String answer) {
+        this.question = question;
+        this.option1 = option1;
+        this.option2 = option2;
+        this.option3 = option3;
+        this.answer = answer;
     }
 
+    public Question() {
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public String getOption1() {
+        return option1;
+    }
+
+    public String getOption2() {
+        return option2;
+    }
+
+    public String getOption3() {
+        return option3;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public void setOption1(String option1) {
+        this.option1 = option1;
+    }
+
+    public void setOption2(String option2) {
+        this.option2 = option2;
+    }
+
+    public void setOption3(String option3) {
+        this.option3 = option3;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
 }

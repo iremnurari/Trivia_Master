@@ -41,7 +41,8 @@ public class ResultListAdapter extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.result_list_row, null);
             TextView resultTxt = convertView.findViewById(R.id.resultRow);
             TextView idResult = convertView.findViewById(R.id.num);
-            resultTxt.setText("--"+result.getScore());
+            String rt = "--"+result.getScore();
+            resultTxt.setText(rt);
             idResult.setText(result.getDate());
             return convertView;
         }
