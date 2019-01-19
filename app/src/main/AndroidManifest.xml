@@ -27,7 +27,8 @@
         <activity android:name=".QuestionEditActivity" />
         <activity android:name=".UserResultActivity" />
         <activity android:name=".ResetPassword" />
-        <activity android:name=".AdminLogin"></activity>
+        <activity android:name=".AdminLogin" />
+        <activity android:name=".AdminListCategory"></activity>
     </application>
 
 </manifest>

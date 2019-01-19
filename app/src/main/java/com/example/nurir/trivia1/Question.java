@@ -1,14 +1,23 @@
 package com.example.nurir.trivia1;
 public class Question {
-   // private int ID;
+    private int qID;
     private String question, option1, option2, option3, answer;
 
-    public Question(String question, String option1, String option2, String option3, String answer) {
+    public Question(String question, String option1, String option2, String option3, String answer, int qID) {
         this.question = question;
         this.option1 = option1;
         this.option2 = option2;
         this.option3 = option3;
         this.answer = answer;
+        this.qID = qID;
+    }
+
+    public int getqID() {
+        return qID;
+    }
+
+    public void setqID(int qID) {
+        this.qID = qID;
     }
 
     public Question() {

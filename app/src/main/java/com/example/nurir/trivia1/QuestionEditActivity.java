@@ -1,6 +1,7 @@
 package com.example.nurir.trivia1;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,10 +9,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class QuestionEditActivity extends AppCompatActivity {
     EditText question, a, b, c, answer;
     Button updateBtn, deleteBtn;
-    Question que = new Question();
     DatabaseHelper databaseHelper = new DatabaseHelper(this);
     int ID = 0;
 
@@ -24,30 +30,44 @@ public class QuestionEditActivity extends AppCompatActivity {
         b = findViewById(R.id.editOptB);
         c = findViewById(R.id.editOptC);
         answer = findViewById(R.id.editAnswer);
+        final Bundle bundle = getIntent().getExtras();
+        final String cate = bundle.getString("cate");
+        final int qID = bundle.getInt("qID");
+        Log.d("selected question", ":"+cate+","+qID);
         updateBtn = findViewById(R.id.updateButton);
         deleteBtn = findViewById(R.id.deleteButton);
-        Bundle bundle = getIntent().getExtras();
-        if(bundle != null){
-            ID = bundle.getInt("ID");
-        }
-        que = databaseHelper.findQuestion(ID);
-        if(que == null ) Log.d("error", "couldn't find the object");
-      /*  question.setText(que.getQUESTION());
-        a.setText(que.getOption1());
-        b.setText(que.getOption2());
-        c.setText(que.getOption3());
-        answer.setText(que.getAnswer());*/
+        FirebaseDatabase.getInstance().getReference("Questions").child(cate).child(""+qID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Question question1 = dataSnapshot.getValue(Question.class);
+                question.setText(question1.getQuestion());
+                a.setText(question1.getOption1());
+                b.setText(question1.getOption2());
+                c.setText(question1.getOption3());
+                answer.setText(question1.getAnswer());
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-          /*      que.setQuestion(question.getText().toString());
+                Question que = new Question();
+                que.setQuestion(question.getText().toString());
                 que.setOption1(a.getText().toString());
-                que.setOPTB(b.getText().toString());
-                que.setOPTC(c.getText().toString());
-                que.setANSWER(answer.getText().toString());
-                databaseHelper.editQuestion(que);
+                que.setOption2(b.getText().toString());
+                que.setOption3(c.getText().toString());
+                que.setAnswer(answer.getText().toString());
+                que.setqID(qID);
+                DatabaseReference updateRef = FirebaseDatabase.getInstance().getReference("Questions").child(cate);
+                updateRef.child(""+qID).setValue(que);
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("c",cate);
                 Intent i = new Intent(QuestionEditActivity.this, AdminEditActivity.class);
-                startActivity(i);*/
+                i.putExtras(bundle1);
+                startActivity(i);
             }
         });
         deleteBtn.setOnClickListener(new View.OnClickListener() {

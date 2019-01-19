@@ -29,7 +29,7 @@ public class AdminActivity extends AppCompatActivity {
         EDIT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AdminActivity.this, AdminEditActivity.class);
+                Intent intent = new Intent(AdminActivity.this, AdminListCategory.class);
                 startActivity(intent);
             }
         });

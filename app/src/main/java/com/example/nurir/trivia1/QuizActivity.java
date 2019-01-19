@@ -35,6 +35,8 @@ public class QuizActivity extends Activity {
 
     }
     public void updateQuestion(){
+        Bundle b = getIntent().getExtras();
+        String cat = b.getString("cat");
         total++;
         String ct = total+ " / 5";
         countQ.setText(ct);
@@ -47,7 +49,7 @@ public class QuizActivity extends Activity {
             startActivity(intent);
         }
         else{
-            questionDatabase = FirebaseDatabase.getInstance().getReference("Questions").child(String.valueOf(total));
+            questionDatabase = FirebaseDatabase.getInstance().getReference("Questions").child(cat).child(String.valueOf(total));
             questionDatabase.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

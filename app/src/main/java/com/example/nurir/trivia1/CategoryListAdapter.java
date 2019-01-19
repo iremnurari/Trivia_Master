@@ -5,15 +5,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class QuestionListAdapter extends BaseAdapter {
-    public ArrayList <Question> adapterArrayList ;
+public class CategoryListAdapter extends BaseAdapter {
+    public ArrayList<String> adapterArrayList ;
     public Activity context;
 
-    public QuestionListAdapter(ArrayList<Question> adapterArrayList, Activity context){
+    public CategoryListAdapter(ArrayList<String> adapterArrayList, Activity context){
         this.adapterArrayList = adapterArrayList;
         this.context = context;
     }
@@ -35,16 +36,17 @@ public class QuestionListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final Question question = (Question) getItem(position);
-        if(convertView == null){
+        final String category = (String) getItem(position);
+        if(convertView==null){
             LayoutInflater layoutInflater = context.getLayoutInflater();
-            convertView = layoutInflater.inflate(R.layout.edit_list_row, null);
-            TextView titleQuestion = convertView.findViewById(R.id.questionTitle);
-            titleQuestion.setText(question.getQuestion());
+            convertView = layoutInflater.inflate(R.layout.cat_list_row, null);
+            TextView catBtn = convertView.findViewById(R.id.catListBtn);
+            catBtn.setText(category);
             return convertView;
         }
-        else {
+        else{
             return null;
         }
+
     }
 }

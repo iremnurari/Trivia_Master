@@ -35,9 +35,9 @@ public class AdminAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!emptyFields()){
-                    String id = databaseReference.push().getKey();
-                   Question q = new Question(question.getText().toString(),optA.getText().toString(),optB.getText().toString(),optC.getText().toString(),answer.getText().toString());
-                   databaseReference.child(String.valueOf(id)).setValue(q);
+                   // String id = databaseReference.push().getKey();
+                   //Question q = new Question(question.getText().toString(),optA.getText().toString(),optB.getText().toString(),optC.getText().toString(),answer.getText().toString(),);
+                   //databaseReference.child(String.valueOf(id)).setValue(q);
                    startActivity(new Intent(AdminAddActivity.this, AdminActivity.class));
                 }
                 else Toast.makeText(getApplicationContext(), "Cannot left empty!" , Toast.LENGTH_LONG).show();

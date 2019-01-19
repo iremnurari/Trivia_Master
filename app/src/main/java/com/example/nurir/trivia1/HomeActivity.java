@@ -8,8 +8,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,17 +23,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeActivity extends AppCompatActivity {
     TextView tvUser;
     Button startQ, result;
     String welcomeMsg;
     FirebaseAuth auth;
-    DatabaseReference database;
+    Spinner spn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         tvUser = findViewById(R.id.tvUser);
+        startQ = findViewById(R.id.startQBtn);
         auth = FirebaseAuth.getInstance();
         final String userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         FirebaseDatabase.getInstance().getReference("Users").child(userID)
@@ -48,31 +56,58 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        /*database = FirebaseDatabase.getInstance().getReference("Users").child(userID);
-        database.addValueEventListener(new ValueEventListener() {
+        spn = findViewById(R.id.spinner);
+        final List<String> arr = new ArrayList<String>();
+        arr.add(0,"Choose Category");
+        FirebaseDatabase.getInstance().getReference("Questions").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Users user = dataSnapshot.getValue(Users.class);
-                String username = user.getUSERNAME();
-
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    //get question child's keys only
+                    String key = snapshot.getKey();
+                    arr.add(key);
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });*/
+        });
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>( this, android.R.layout.simple_spinner_item, arr);
+        spn.setAdapter(arrayAdapter);
+        spn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(parent.getItemAtPosition(position).equals("Choose Category")){
 
+                }
+                else {
+                    String item = parent.getItemAtPosition(position).toString();
+                    Toast.makeText(parent.getContext(), ""+item, Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-        startQ = findViewById(R.id.startBtn);
+            }
+        });
+
         startQ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
-                //Bundle bundle1= new Bundle();
-               // bundle1.putString("user", username);
-                //intent.putExtras(bundle1);
-                startActivity(intent);
+                String cat = spn.getSelectedItem().toString();
+                if(cat.equals("Choose Category")){
+                    Toast.makeText(getApplicationContext(), "Please select a category.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Log.d("category", ":" + cat);
+                    Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("cat", cat);
+                    intent.putExtras(b);
+                    startActivity(intent);
+                }
             }
         });
         result = findViewById(R.id.resultBtn);
@@ -80,9 +115,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, UserResultActivity.class);
-                Bundle bundle2 = new Bundle();
-               // bundle2.putString("resultuser", username);
-               // i.putExtras(bundle2);
                 startActivity(i);
             }
         });
