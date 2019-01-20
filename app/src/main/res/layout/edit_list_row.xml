@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -14,18 +15,24 @@
             android:id="@+id/questionID"
             android:layout_width="wrap_content"
             android:layout_height="64dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_weight="0"
-            android:textSize="20dp"
             android:text="TextView"
+            android:textSize="20dp"
+            app:fontFamily="@font/carrois_gothic"
             tools:layout_editor_absoluteY="7dp" />
 
         <TextView
             android:id="@+id/questionTitle"
             android:layout_width="wrap_content"
             android:layout_height="64dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:text="TextView"
             android:textSize="20dp"
+            app:fontFamily="@font/carrois_gothic"
             tools:layout_editor_absoluteX="151dp"
             tools:layout_editor_absoluteY="120dp" />
     </LinearLayout>

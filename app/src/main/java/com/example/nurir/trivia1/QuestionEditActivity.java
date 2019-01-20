@@ -18,8 +18,6 @@ import com.google.firebase.database.ValueEventListener;
 public class QuestionEditActivity extends AppCompatActivity {
     EditText question, a, b, c, answer;
     Button updateBtn, deleteBtn;
-    DatabaseHelper databaseHelper = new DatabaseHelper(this);
-    int ID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

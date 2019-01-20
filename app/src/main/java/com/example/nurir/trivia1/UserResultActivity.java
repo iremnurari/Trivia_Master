@@ -20,7 +20,6 @@ import java.util.ArrayList;
 
 public class UserResultActivity extends AppCompatActivity {
     ArrayList<Result> results ;
-    FirebaseAuth auth;
     DatabaseReference resultDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

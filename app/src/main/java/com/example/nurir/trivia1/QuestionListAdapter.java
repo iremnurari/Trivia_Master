@@ -47,7 +47,7 @@ public class QuestionListAdapter extends BaseAdapter {
             return convertView;
         }
         else {
-            return null;
+            return convertView;
         }
     }
 }

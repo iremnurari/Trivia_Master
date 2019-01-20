@@ -23,7 +23,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="TextView" />
+                android:text="tx"
+                app:fontFamily="cursive" />
         </LinearLayout>
 
         <LinearLayout
@@ -36,7 +37,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                android:layout_marginTop="50dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                app:fontFamily="@font/carrois_gothic" />
         </LinearLayout>
 
         <LinearLayout
@@ -47,12 +50,13 @@
 
             <Button
                 android:id="@+id/radio0"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/buttonColor"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:background="@color/buttonColor"
+                android:text="Button"
+                android:typeface="serif" />
         </LinearLayout>
 
         <LinearLayout
@@ -66,9 +70,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/buttonColor"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:background="@color/buttonColor"
+                android:text="Button"
+                android:typeface="serif" />
         </LinearLayout>
 
         <LinearLayout
@@ -81,10 +86,11 @@
                 android:id="@+id/radio2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/buttonColor"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:background="@color/buttonColor"
+                android:text="Button"
+                android:typeface="serif" />
         </LinearLayout>
 
     </LinearLayout>

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,19 +58,6 @@ public class AdminEditActivity extends AppCompatActivity {
 
             }
         });
-
-        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(AdminEditActivity.this, QuestionEditActivity.class);
-                Bundle bundle = new Bundle();
-                Question question = questions.get(position);
-               // bundle.putInt("ID", question.getID());
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });*/
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

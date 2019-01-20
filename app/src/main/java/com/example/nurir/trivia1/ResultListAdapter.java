@@ -47,7 +47,7 @@ public class ResultListAdapter extends BaseAdapter {
             return convertView;
         }
         else {
-            return null;
+            return convertView;
         }
     }
 }

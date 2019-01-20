@@ -18,7 +18,6 @@ import com.google.firebase.database.DatabaseReference;
 
 public class AdminLogin extends AppCompatActivity {
     private FirebaseAuth auth;
-    private DatabaseReference databaseReference;
     private EditText adminEmailTxt, adminPassTxt;
     private Button logBtn, backBtn;
 
