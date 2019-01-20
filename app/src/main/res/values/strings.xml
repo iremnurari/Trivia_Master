@@ -18,4 +18,5 @@
     </string>
     <string name="result_user">Your Scores</string>
     <string name="finished">Quiz ended</string>
+    <string name="add_cat">Add Category</string>
 </resources>

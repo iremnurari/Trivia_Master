@@ -28,7 +28,8 @@
         <activity android:name=".UserResultActivity" />
         <activity android:name=".ResetPassword" />
         <activity android:name=".AdminLogin" />
-        <activity android:name=".AdminListCategory"></activity>
+        <activity android:name=".AdminListCategory" />
+        <activity android:name=".AddCategoryActivity"></activity>
     </application>
 
 </manifest>
