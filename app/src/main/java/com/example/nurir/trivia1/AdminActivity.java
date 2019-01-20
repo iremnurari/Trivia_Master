@@ -21,7 +21,10 @@ public class AdminActivity extends AppCompatActivity {
         ADD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AdminActivity.this, AdminAddActivity.class);
+                Intent intent = new Intent(AdminActivity.this, AdminListCategory.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("admin", "adminAdd");
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

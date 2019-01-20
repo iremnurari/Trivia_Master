@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
@@ -96,17 +97,36 @@ public class HomeActivity extends AppCompatActivity {
         startQ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String cat = spn.getSelectedItem().toString();
+                final String cat = spn.getSelectedItem().toString();
                 if(cat.equals("Choose Category")){
                     Toast.makeText(getApplicationContext(), "Please select a category.", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Log.d("category", ":" + cat);
-                    Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
-                    Bundle b = new Bundle();
-                    b.putString("cat", cat);
-                    intent.putExtras(b);
-                    startActivity(intent);
+                    final Bundle b = new Bundle();
+                    FirebaseDatabase.getInstance().getReference("Questions").child(cat).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            long count = dataSnapshot.getChildrenCount();
+                            Log.d("question count1", ":" + count);
+                            ArrayList<Integer> rands = new ArrayList<>();
+                            for (int x = 1; x <= count; x++) {
+                                rands.add(x);
+                            }
+                            Collections.shuffle(rands);
+                            b.putIntegerArrayList("rands",rands);
+                            Intent intent = new Intent(HomeActivity.this, QuizActivity.class);
+                            b.putString("cat", cat);
+                            intent.putExtras(b);
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
             }
         });

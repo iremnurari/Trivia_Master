@@ -17,4 +17,5 @@
         completions."
     </string>
     <string name="result_user">Your Scores</string>
+    <string name="finished">Quiz ended</string>
 </resources>

@@ -16,13 +16,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class AdminListCategory extends AppCompatActivity {
     ArrayList<String> categoryArrayList;
+    String control;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_list_category);
+        final Bundle adminBundle = getIntent().getExtras();
         final ListView catLV = findViewById(R.id.catListView);
         categoryArrayList = new ArrayList<>();
         FirebaseDatabase.getInstance().getReference("Questions").addValueEventListener(new ValueEventListener() {
@@ -39,12 +43,20 @@ public class AdminListCategory extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         String c1 = categoryArrayList.get(position);
-                        Bundle bundle = new Bundle();
+                        final Bundle bundle = new Bundle();
                         Log.d("category clicked", ":"+c1);
                         bundle.putString("c",c1);
-                        Intent i = new Intent(AdminListCategory.this, AdminEditActivity.class);
-                        i.putExtras(bundle);
-                        startActivity(i);
+                        if(adminBundle != null){
+                            Intent i = new Intent(AdminListCategory.this, AdminAddActivity.class);
+                            i.putExtras(bundle);
+                            startActivity(i);
+                        }
+                        else{
+                            Intent i = new Intent(AdminListCategory.this, AdminEditActivity.class);
+                            i.putExtras(bundle);
+                            startActivity(i);
+                        }
+
                     }
                 });
             }

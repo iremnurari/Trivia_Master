@@ -33,6 +33,8 @@ public class QuestionEditActivity extends AppCompatActivity {
         final Bundle bundle = getIntent().getExtras();
         final String cate = bundle.getString("cate");
         final int qID = bundle.getInt("qID");
+        final Bundle bundle1 = new Bundle();
+        bundle1.putString("c",cate);
         Log.d("selected question", ":"+cate+","+qID);
         updateBtn = findViewById(R.id.updateButton);
         deleteBtn = findViewById(R.id.deleteButton);
@@ -63,8 +65,6 @@ public class QuestionEditActivity extends AppCompatActivity {
                 que.setqID(qID);
                 DatabaseReference updateRef = FirebaseDatabase.getInstance().getReference("Questions").child(cate);
                 updateRef.child(""+qID).setValue(que);
-                Bundle bundle1 = new Bundle();
-                bundle1.putString("c",cate);
                 Intent i = new Intent(QuestionEditActivity.this, AdminEditActivity.class);
                 i.putExtras(bundle1);
                 startActivity(i);
@@ -73,8 +73,10 @@ public class QuestionEditActivity extends AppCompatActivity {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                databaseHelper.deleteQuestion(ID);
+                DatabaseReference deleteRef = FirebaseDatabase.getInstance().getReference("Questions").child(cate);
+                deleteRef.child(""+qID).removeValue();
                 Intent i = new Intent(QuestionEditActivity.this, AdminEditActivity.class);
+                i.putExtras(bundle1);
                 startActivity(i);
             }
         });

@@ -40,7 +40,10 @@ public class QuestionListAdapter extends BaseAdapter {
             LayoutInflater layoutInflater = context.getLayoutInflater();
             convertView = layoutInflater.inflate(R.layout.edit_list_row, null);
             TextView titleQuestion = convertView.findViewById(R.id.questionTitle);
+            TextView idQuestion = convertView.findViewById(R.id.questionID);
             titleQuestion.setText(question.getQuestion());
+            String txt = question.getqID()+" :";
+            idQuestion.setText(txt);
             return convertView;
         }
         else {

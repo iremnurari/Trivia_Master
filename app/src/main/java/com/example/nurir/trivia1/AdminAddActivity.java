@@ -1,9 +1,11 @@
 package com.example.nurir.trivia1;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,32 +14,42 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.support.v7.app.ActionBar;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class AdminAddActivity extends AppCompatActivity {
-    EditText question, optA, optB, optC, answer;
+    EditText question, optA, optB, optC, answer, ID;
     Button addQuest;
     DatabaseReference databaseReference;
+    Long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_add);
+        Bundle b = getIntent().getExtras();
+        final String cat = b.getString("c");
+        ID = findViewById(R.id.newQID);
         question = findViewById(R.id.newQuestionTxt);
         optA = findViewById(R.id.optA);
         optB = findViewById(R.id.optB);
         optC = findViewById(R.id.optC);
         answer = findViewById(R.id.answer);
-        databaseReference = FirebaseDatabase.getInstance().getReference("Questions");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Questions").child(cat);
         addQuest = findViewById(R.id.addNewQuestionBtn);
         addQuest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!emptyFields()){
-                   // String id = databaseReference.push().getKey();
-                   //Question q = new Question(question.getText().toString(),optA.getText().toString(),optB.getText().toString(),optC.getText().toString(),answer.getText().toString(),);
-                   //databaseReference.child(String.valueOf(id)).setValue(q);
+                    String childID = ID.getText().toString();
+                    int qID = Integer.valueOf(childID);
+                   Question q = new Question(question.getText().toString(),optA.getText().toString(),optB.getText().toString(),optC.getText().toString(),answer.getText().toString(),qID);
+                   databaseReference.child(childID).setValue(q);
                    startActivity(new Intent(AdminAddActivity.this, AdminActivity.class));
                 }
                 else Toast.makeText(getApplicationContext(), "Cannot left empty!" , Toast.LENGTH_LONG).show();
